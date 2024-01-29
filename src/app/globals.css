@@ -21,3 +21,59 @@ body {
   color: var(--text);
 
 }
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.container{
+  min-width: 80vw;
+  margin:auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (max-width: 1536px) {
+  .container{
+    width: 1366px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 1366px) {
+  .container{
+    width: 1280px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .container{
+    width: 1024px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container{
+    width: 768px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container{
+    width: 640px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container{
+    width: 475px;
+  }
+}

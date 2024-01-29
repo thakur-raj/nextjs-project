@@ -1,0 +1,20 @@
+.container{
+   display: flex;
+   gap: 5rem; 
+}
+
+.textContainer{
+flex: 1;
+}
+
+.imageContainer{
+ position: relative;
+flex: 1;
+
+}
+
+.brands{
+    width: 3.5rem;
+    height: 3.5rem;
+    position: relative;
+}
