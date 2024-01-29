@@ -5,13 +5,13 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.textContainer}>
-        <h1>Creative Thought Agency</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <h1 className={styles.title}>Creative <br/>Thought <br/>Agency</h1>
+        <p className={styles.description}>Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </p>
         <div className={styles.butttons}>
-          <button className={styles.butttons}>Learn More</button>
-          <button className={styles.butttons}>Contact Us</button>
+          <button className={styles.buttonElement}>Learn More</button>
+          <button className={styles.buttonElement}>Contact Us</button>
         </div>
         <div className={styles.brands}>
           <Image src='/brands.png' alt='brands' fill className={styles.brandImg} />
