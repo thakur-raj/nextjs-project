@@ -53,3 +53,23 @@ gap: 50px;
  position: relative;
 
 }
+
+
+@media (max-width: 1024px) {
+    .container{
+      flex-direction: column;
+      text-align: center;
+    }
+    .butttons{
+     justify-content: center;   
+    }
+  }
+
+  @media (max-width: 768px) {
+    .title{
+        font-style: 64px;
+    }
+    .brands{
+        width: 100%;
+    }
+  }
