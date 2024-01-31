@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./postcard.module.css";
 import Link from "next/link";
 
-type Props = {};
+type Props = {post:any};
 
 const PostCard = (props: Props) => {
   return (
@@ -14,9 +14,9 @@ const PostCard = (props: Props) => {
         <span className={styles.date}>01.01.2024</span>
       </div>
       <div className={styles.bottom}>
-        <h1 className={styles.title}>Title</h1>
-        <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo at expedita voluptatum, repellendus molestiae, veniam officia delectus illo aut rem facere sequi perferendis possimus temporibus incidunt quae? Aperiam, molestiae explicabo.</p>
-        <Link className={styles.pageLink} href="/blog/post">Read More</Link>
+        <h1 className={styles.title}>{props.post.title}</h1>
+        <p className={styles.desc}>{props.post.body}</p>
+        <Link className={styles.pageLink} href={`/blog/${props.post.id}`}>Read More</Link>
       </div>
     </div>
   );
