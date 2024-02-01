@@ -2,21 +2,27 @@ import Image from "next/image";
 import styles from "./singlepost.module.css";
 import PostUser from "@/components/postUser/PostUser";
 import { Suspense } from "react";
+import { getPost } from "@/lib/data";
 
-const getData = async (slug: any) => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${slug}`
-  );
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  const data = await response.json();
-  return data;
-};
+// FETCH DATA WITH AN API
+// const getData = async (slug: any) => {
+//   const response = await fetch(
+//     `https://jsonplaceholder.typicode.com/posts/${slug}`
+//   );
+//   if (!response.ok) {
+//     throw new Error("Failed to fetch data");
+//   }
+//   const data = await response.json();
+//   return data;
+// };
 
 const SinglePostPage = async ({ params }: any) => {
   const { slug } = params;
-  const post = await getData(slug);
+  // FETCH DATA WITH AN API
+  // const post = await getData(slug);
+
+  // FETCH DATA WITHOUT AN API
+  const post = await getPost(slug);
 
   return (
     <div className={styles.container}>
@@ -29,7 +35,7 @@ const SinglePostPage = async ({ params }: any) => {
         />
       </div>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>{post.title}</h1>
+        <h1 className={styles.title}>{post?.title}</h1>
         <div className={styles.detail}>
           <Image
             className={styles.avatar}
@@ -38,16 +44,16 @@ const SinglePostPage = async ({ params }: any) => {
             width={50}
             height={50}
           />
-          <Suspense fallback={<div>Loading...</div>} >
+          {post && < Suspense fallback={<div>Loading...</div>} >
             <PostUser id={post.userId} />
-          </Suspense>
+          </Suspense>}
           <div className={styles.detailText}>
             <span className={styles.detailTitle}>Published</span>
             <span className={styles.detailValue}>01.01.2024</span>
             
           </div>
         </div>
-        <div className={styles.content}>{post.body}</div>
+        <div className={styles.content}>{post?.body}</div>
       </div>
     </div>
   );

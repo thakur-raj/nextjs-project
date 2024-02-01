@@ -1,7 +1,7 @@
 import styles from "./postuser.module.css";
 
 type Props = {
-  id: number;
+  id: number|undefined;
 };
 
 const getData = async (userId: any) => {
