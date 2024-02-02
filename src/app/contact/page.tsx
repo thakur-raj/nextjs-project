@@ -1,7 +1,13 @@
-"use client"
+// "use client"
 
 import Image from "next/image";
 import styles from "./contact.module.css";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact Page",
+  description: "My next app Contact Page description",
+};
 
 const ContactPage = () => {
   return (
