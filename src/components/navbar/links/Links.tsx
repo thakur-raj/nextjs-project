@@ -1,9 +1,11 @@
 "use client";
-import Link from "next/link";
-import NavLink from "./navLink/NavLink";
-import styles from "./links.module.css";
-import { useState } from "react";
+import { handleLogout } from "@/lib/actions";
 import Image from "next/image";
+import { useState } from "react";
+import styles from "./links.module.css";
+import NavLink from "./navLink/NavLink";
+import { auth } from "@/lib/auth";
+import { Session } from "next-auth";
 
 const links = [
   {
@@ -24,10 +26,9 @@ const links = [
   },
 ];
 
-const Links = () => {
+const Links = ({session}:any) => {
   const [open, setOpen] = useState(false);
 
-  const session = true;
   const isAdmin = true;
 
   return (
@@ -36,10 +37,12 @@ const Links = () => {
         {links.map((link, index) => (
           <NavLink item={link} key={index}/>
         ))}
-        {session ? (
+        {session?.user ? (
           <>
-            {isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
+            {session.user?.isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
+            <form action={handleLogout}>
             <button className={`${styles.logout} px-1.5 py-1`}>Logout</button>
+            </form>
           </>
         ) : (
           <NavLink item={{ title: "Login", path: "/login" }} />

@@ -1,8 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { Post } from "./models";
+import { Post, User } from "./models";
 import { connectToDb } from "./utils";
+import { signIn, signOut } from "./auth";
+
+import bcrypt from "bcrypt";
 
 export const addPost = async (formData: any) => {
 
@@ -53,3 +56,73 @@ export const deletePost = async (formData: any) => {
   
   };
   
+
+  export const handleGithubLogin = async () => {
+    "use server"
+    await signIn("github")
+  }
+
+  export const handleLogout = async () => {
+    "use server"
+    await signOut()
+  }
+
+  export const register = async (previousState:any,formData: any) => {
+    const { username, email, password,img,passwordRepeat } = Object.fromEntries(formData);
+
+    if(password !== passwordRepeat) {
+      return {
+        error: "Passwords do not match"
+      }
+    }
+    try {
+      connectToDb();
+
+      const user = await User.findOne({ username });
+      if(user) {
+        return {
+          error: "User already exists"
+        }
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      
+      const newUser = new User({
+        username,
+        email,
+        password:hashedPassword,
+        img
+      });
+
+      await newUser.save();
+      console.log("Registered user ==> ", newUser);
+      return {success: true};
+    } catch (error: any) {
+      console.log("Unable to register", error.message);
+      return {
+        error: "Someting went wrong",
+      }
+      
+    }
+  }
+
+  export const login = async (formData: any) => {
+    const { username, password } = Object.fromEntries(formData);
+
+    try {
+      await signIn("credentials", {
+        username,
+        password,
+      })
+      
+    } catch (error: any) {
+      console.log("Unable to login", error.message);
+      return {
+        error: "Someting went wrong",
+      }
+      
+    }
+
+
+  }
