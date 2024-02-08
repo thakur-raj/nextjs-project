@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDb } from "./utils";
 import { User } from "./models";
 import bcrypt from "bcrypt";
+import { authConfig } from "./auth.config";
 
 const login = async (credentials: any) => {
   try {
@@ -11,7 +12,7 @@ const login = async (credentials: any) => {
     const { username, password } = credentials;
     const user = await User.findOne({ username });
     if (!user) {
-      throw new Error("Invalid Credentials");
+      throw new Error("Invalid User");
     }
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
@@ -21,7 +22,7 @@ const login = async (credentials: any) => {
 
     return user;
   } catch (error: any) {
-    console.log("Unable to login", error);
+    console.log("Unable to login : ", error);
     throw new Error("Unable to login", error);
   }
 };
@@ -32,6 +33,7 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  ...authConfig,
   providers: [
     GitHub({
       clientId: process.env.GITHUB_ID,
@@ -78,5 +80,6 @@ export const {
       }
       return true;
     },
+    ...authConfig.callbacks,
   },
 });

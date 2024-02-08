@@ -107,7 +107,7 @@ export const deletePost = async (formData: any) => {
     }
   }
 
-  export const login = async (formData: any) => {
+  export const login = async (previousState:any,formData: any) => {
     const { username, password } = Object.fromEntries(formData);
 
     try {
@@ -118,9 +118,14 @@ export const deletePost = async (formData: any) => {
       
     } catch (error: any) {
       console.log("Unable to login", error.message);
-      return {
-        error: "Someting went wrong",
+
+      if(error.message === "CredentialsSignin") {
+        return {
+          error: "Invalid Credentials"
+        }
       }
+
+      throw error;
       
     }
 
